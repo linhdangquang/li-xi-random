@@ -14,6 +14,42 @@ type LiXi = {
 
 const images = [baolixi1, baolixi2, baolixi3, baolixi4, baolixi5, baolixi6];
 
+type Question = {
+  question: string;
+  answer: string[];
+};
+
+const questions: Question[] = [
+  {
+    question: 'Năm nay là năm con gì?',
+    answer: ['thìn', 'rồng', 'dragon', 'thìn rồng', 'rồng thìn'],
+  },
+  {
+    question: 'Con Rồng tiếng anh là gì?',
+    answer: ['dragon'],
+  },
+  {
+    question: 'Chị heo sinh ngày bao nhiêu?',
+    answer: ['29'],
+  },
+  {
+    question: 'Chị heo sinh tháng nào?',
+    answer: ['6', 'sáu', 'june', 'tháng 6', '06'],
+  },
+  {
+    question: 'Chị heo sinh năm nào?',
+    answer: ['2002', 'hai nghìn linh hai', 'hai nghìn không trăm hai', '2k2'],
+  },
+  {
+    question: 'Năm nay là năm bao nhiêu?',
+    answer: [
+      '2024',
+      'hai nghìn hai mươi tư',
+      'hai nghìn không trăm hai mươi tư',
+    ],
+  },
+];
+
 const HomePage = () => {
   const maxRetry = 3;
   const [retry, setRetry] = useState(0);
@@ -49,6 +85,30 @@ const HomePage = () => {
       transition: { duration: 1 },
     },
     animate: { rotate: 0, x: 0, scale: 1, transition: { duration: 1 } },
+  };
+
+  const onAnswerQuestion = (money: LiXi) => {
+    // don't repeat
+    const question = questions[Math.floor(Math.random() * questions.length)];
+    const answer = prompt(question.question);
+    console.log(answer, question.answer);
+    if (
+      question.answer.some((ans) => ans.toLowerCase() === answer?.toLowerCase())
+    ) {
+      alert('Chúc mừng bạn đã trả lời đúng!');
+      select(money);
+    } else {
+      alert('Rất tiếc, bạn đã trả lời sai!');
+    }
+  };
+
+  const select = (money: LiXi) => {
+    if (selectedMoney) {
+      alert('Bạn đã chọn lì xì rồi!');
+      return;
+    }
+    setRetry(retry + 1);
+    setSelectedMoney(money);
   };
 
   return (
@@ -140,14 +200,7 @@ const HomePage = () => {
                   animate='animate'
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   className='mx-auto'
-                  onClick={() => {
-                    if (selectedMoney) {
-                      alert('Bạn đã chọn lì xì rồi!');
-                      return;
-                    }
-                    setRetry(retry + 1);
-                    setSelectedMoney(money);
-                  }}
+                  onClick={onAnswerQuestion.bind(null, money)}
                 />
               </AnimatePresence>
             );
@@ -158,10 +211,11 @@ const HomePage = () => {
         // if selected money is not null, show ket qua
         selectedMoney && (
           <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            initial={{ opacity: 0, scale: 2, y: -200 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 1 }}
             className='text-center font-dancing font-semibold text-xl py-4'
+            // scale up and down
           >
             Chúc mừng bạn nhận được lì xì trị giá:
             {
