@@ -52,7 +52,8 @@ const HomePage = () => {
           Chọn 1 bao lì xì may mắn để nhận lì xì từ 10.000đ đến 500.000đ
         </p>
       </div>
-      <div className='grid sm:grid-cols-6 grid-cols-3 gap-4 items-center justify-between h-full w-full '>
+      <div className='grid sm:grid-cols-6 grid-cols-3 gap-4 items-center justify-between h-full w-full '
+      >
         {moneys.map((money, index) => {
           if (selectedMoney?.money === money.money) {
             return (
@@ -61,12 +62,14 @@ const HomePage = () => {
                 bg-ket-qua bg-cover border-2 border-dashed border-orange-400 min-h-40
                
               `}
-                key={index}
+                key={money.money}
                 // animate flip
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
               >
-                <div className='flex flex-col items-center justify-center h-full w-full'>
+                <div className='flex flex-col items-center justify-center h-full w-full'
+                  key={index}
+                >
                   <h1 className='text-xl font-dancing font-semibold text-center'>
                     {
                       // to VND currency
