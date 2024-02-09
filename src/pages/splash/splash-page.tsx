@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import Typewriter from 'typewriter-effect';
 import { motion } from 'framer-motion';
-import dragonImg from '../../../public/dragon.png';
+import dragonImg from '/dragon.png';
 const SplashPage = () => {
   return (
     <main className='p-4'>
